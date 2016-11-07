@@ -6,7 +6,9 @@
   "dependencies": {
     "ts-loader": "^0.9.5"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "typescript": "^2.0.7"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

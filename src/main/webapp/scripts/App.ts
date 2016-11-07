@@ -1,15 +1,13 @@
 /// <reference path="../typings/index.d.ts" />
+import { RegisterView } from './view/RegisterView';
 
-//import { Opp } from './Opp';
+class App {
 
-export class App {
+    constructor() {
+        this.init();
+    }
 
-//    val : JQuery;
-//
-//    constructor (){
-//        let text : JQuery = $('.bt');
-//        text.click(()=>{
-//            this.val = text;
-//        })
-//    }
+    private init () : void {
+        new RegisterView();
+    }
 }

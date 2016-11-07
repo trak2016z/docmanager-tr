@@ -12,7 +12,27 @@ import org.springframework.web.servlet.ModelAndView;
 public class RoutingController {
 
    @RequestMapping(path = {"/", "/index"})
-   public ModelAndView getMainPage (){
+   public ModelAndView getMainPage() {
       return new ModelAndView("/views/index.html");
+   }
+
+   @RequestMapping(path = "/login")
+   public ModelAndView getLoginPage() {
+      return new ModelAndView("/views/login.html");
+   }
+
+   @RequestMapping(path = "/controlpanel")
+   public ModelAndView getControlPanel() {
+      return new ModelAndView("/views/controlpanel.html");
+   }
+
+   @RequestMapping(path = "/publication")
+   public ModelAndView getPublicationView() {
+      return new ModelAndView("/views/publicationview.html");
+   }
+
+   @RequestMapping(path = "/register")
+   public ModelAndView getRegistrationView() {
+      return new ModelAndView("/views/register.html");
    }
 }
