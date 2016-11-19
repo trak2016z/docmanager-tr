@@ -1,0 +1,21 @@
+.form-register-input-cap {
+    width: 70px;
+}
+
+#form-register {
+    position: relative;
+    margin-top: 20px;
+    padding-left: 20%;
+    padding-right: 20%;
+}
+
+#form-register .input-group {
+    position: relative;
+    margin-bottom: 5px;
+
+}
+
+.form-register-button {
+    position: absolute;
+    right: 20%;
+}

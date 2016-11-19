@@ -1,13 +1,20 @@
 /// <reference path="../typings/index.d.ts" />
+//@ sourceMappingUrl=../bundle.js.map
 import { RegisterView } from './view/RegisterView';
 
 class App {
 
     constructor() {
-        this.init();
     }
 
-    private init () : void {
-        new RegisterView();
+}
+window.onload = () => {
+    var openedSite = window.location.toString().split("/").pop();
+    var currentView;
+    switch (openedSite) {
+        case 'register' : 
+        currentView = new RegisterView();
+        break;
     }
 }
+

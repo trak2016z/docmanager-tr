@@ -32,7 +32,7 @@ public class RoutingController {
    }
 
    @RequestMapping(path = "/register")
-   public ModelAndView getRegistrationView() {
-      return new ModelAndView("/views/register.html");
+   public String getRegistrationView() {
+      return "/views/register.html";
    }
 }

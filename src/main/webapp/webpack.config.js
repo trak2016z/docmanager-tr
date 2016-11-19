@@ -1,10 +1,12 @@
-module.exports = {  
+module.exports = {
+  devtool: "source-map",
   entry: './scripts/App.ts',
   output: {
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    sourceMapFilename: "bundle.js.map",
   },
   resolve: {
-    extensions: ['', '.webpack.js', '.web.js', '.ts', '.js']
+    extensions: ['.ts', '', '.webpack.js', '.web.js', '.js']
   },
   module: {
     loaders: [

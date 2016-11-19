@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import pl.ksprzk.docmanager.domain.login.LoginUserData;
+import pl.ksprzk.docmanager.integration.exceptions.AlreadyExistException;
 import pl.ksprzk.docmanager.integration.exceptions.NoSuchUserException;
 import pl.ksprzk.docmanager.integration.exceptions.PermissionDeniedException;
 import pl.ksprzk.docmanager.integration.permissions.AuthRules;
@@ -37,6 +38,13 @@ public class UserPersistenceService {
          LoginUserData data = new LoginUserData.LoginUserDataBuilder(user.getId(), user.getFirstName(), user.getPermission(),
                  user.getTrusted()).avatar(user.getAvatar()).build();
          return data;
+      }
+   }
+   
+   public void registerUser (User u) throws AlreadyExistException{
+      User dbUser = this.repository.findUserByEmail(u.getEmail());
+      if (dbUser != null){
+         throw new AlreadyExistException();
       }
    }
 }
