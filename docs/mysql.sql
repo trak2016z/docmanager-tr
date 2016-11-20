@@ -104,7 +104,7 @@ CREATE TABLE `user` (
   `avatar` varchar(50) DEFAULT NULL,
   `trusted` bit(1) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
-  `password` varchar(50) NOT NULL,
+  `password` varchar(128) NOT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

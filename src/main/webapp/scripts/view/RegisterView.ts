@@ -1,5 +1,6 @@
 import { RegisteredUser } from '../model/RegisteredUser';
 import { UserValidator } from '../utils/UserValidator';
+import { RegisterService } from '../services/RegisterService';
 export class RegisterView {
     private form: JQuery;
     private registerButton: JQuery;
@@ -13,13 +14,13 @@ export class RegisterView {
         this.form = $('#form-register');
         this.registerButton = this.form.find('.form-register-button');
         this.encryptor = new jsSHA('SHA-512', "TEXT");
-
+        
         this.registerButton.click(()=>{
             let data = this.getDataFromForm();
             let isValid = this.validateData(data);
             if (isValid){
                 data = this.encryptPassword(data);
-                
+                RegisterService.registerUser(data);
             }
         });
 
@@ -31,7 +32,7 @@ export class RegisterView {
         if (!userData.dob){
            return false; 
         }
-        if (!userData.email || validator.isEmailValid(userData.email)){
+        if (!userData.email || !validator.isEmailValid(userData.email)){
             return false;
         }
 
@@ -39,7 +40,8 @@ export class RegisterView {
     }
 
     private encryptPassword (userData: RegisteredUser): RegisteredUser{ 
-        let encryptedPw = this.encryptor.getHash(userData.password);
+        this.encryptor.update(userData.password);
+        let encryptedPw = this.encryptor.getHash("HEX");
         userData.password = encryptedPw;
         return userData;
     }
@@ -49,8 +51,8 @@ export class RegisterView {
         let password: string = this.form.find('.pw-edit').val();
         let firstName: string = this.form.find('.fname-edit').val();
         let lastName: string = this.form.find('.lname-edit').val();
-        let phone: string = this.form.find('.edit-phone').val();
-        let dob: Date = this.form.find('.edit-dob').val();
+        let phone: string = this.form.find('.phone-edit').val();
+        let dob: Date = this.form.find('.dob-edit').val();
         let middlename: string = this.form.find('.mname-edit').val();
 
         let data: RegisteredUser = {

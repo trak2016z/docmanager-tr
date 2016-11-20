@@ -30,7 +30,7 @@ public class User implements Serializable {
 
    @Column
    @NotNull
-   @Size(max = 50, min = 8)
+   @Size(max = 128, min = 8)
    private String password;
    
    @Column(name = "fname")

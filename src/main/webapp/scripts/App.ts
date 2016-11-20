@@ -1,8 +1,8 @@
 /// <reference path="../typings/index.d.ts" />
 //@ sourceMappingUrl=../bundle.js.map
 import { RegisterView } from './view/RegisterView';
-
-class App {
+import * as jQuery from "jquery"
+export class App {
 
     constructor() {
     }

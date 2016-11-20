@@ -9,18 +9,13 @@ import java.util.Calendar;
  */
 public class UserDTO {
 
-   @JsonProperty(value = "fname")
    private String firstName;
-   @JsonProperty(value = "lname")
    private String lastName;
-   @JsonProperty(value = "pw")
    private String password;
    @JsonProperty(value = "dob")
    private Calendar dateOfBirth;
 
    private String phone;
-
-   @JsonProperty(value = "mname")
    private String middleName;
    private String email;
 

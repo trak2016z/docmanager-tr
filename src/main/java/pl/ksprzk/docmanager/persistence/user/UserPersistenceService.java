@@ -46,5 +46,9 @@ public class UserPersistenceService {
       if (dbUser != null){
          throw new AlreadyExistException();
       }
+      else {
+         this.repository.save(u);
+      }
+      
    }
 }
