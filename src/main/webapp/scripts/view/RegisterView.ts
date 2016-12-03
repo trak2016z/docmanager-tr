@@ -34,8 +34,8 @@ export class RegisterView {
         this.emailInput = this.form.find('.email-edit');
         this.passwordInput = this.form.find('.pw-edit');
         this.firstNameInput = this.form.find('.fname-edit');
-        this.middleNameInput = this.form.find('.mname-input');
-        this.lastNameInput = this.form.find('.lname-input');
+        this.middleNameInput = this.form.find('.mname-edit');
+        this.lastNameInput = this.form.find('.lname-edit');
         this.dobInput = this.form.find('.dob-edit');
         this.phoneInput = this.form.find('.phone-edit');
 
