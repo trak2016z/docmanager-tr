@@ -1,3 +1,5 @@
+var webpack = require('webpack');  
+
 module.exports = {
   devtool: "source-map",
   entry: './scripts/App.ts',
@@ -5,12 +7,16 @@ module.exports = {
     filename: 'bundle.js',
     sourceMapFilename: "bundle.js.map",
   },
+  devtool: 'source-map',
   resolve: {
-    extensions: ['.ts', '', '.webpack.js', '.web.js', '.js']
+    extensions: [ '', '.webpack.js', '.web.js', '.ts', '.js']
   },
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin()
+  ],
   module: {
     loaders: [
-      { test: /\.ts$/, loader: 'ts-loader' }
+      { test: /\.ts$/, loader: 'ts' }
     ]
   }
 }

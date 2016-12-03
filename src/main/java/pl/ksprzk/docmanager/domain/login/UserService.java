@@ -23,7 +23,17 @@ class UserService {
 
    void registerUser(UserDTO user) throws AlreadyExistException {
       User entity = UserFactory.createEntity(user);
-      //persistenceService.registerUser(entity);
-      MailSender.sendMessage("registerMsg", user.getEmail());
+      persistenceService.registerUser(entity);
+      new Runnable() {
+         @Override
+         public void run() {
+            MailSender.sendMessage("registerMsg", user.getEmail());
+         }
+      }.run();
+     
+   }
+   
+   Boolean emailAvailable (String email){
+      return persistenceService.userExist(email);
    }
 }

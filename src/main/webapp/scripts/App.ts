@@ -3,7 +3,6 @@
 import { RegisterView } from './view/RegisterView';
 import * as jQuery from "jquery"
 export class App {
-
     constructor() {
     }
 

@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.ksprzk.docmanager.integration.exceptions.AlreadyExistException;
 
@@ -26,6 +27,11 @@ public class RegisterController {
    public ResponseEntity registerUser (@RequestBody UserDTO user) throws AlreadyExistException{
       service.registerUser(user);
       return ResponseEntity.ok().build();
+   }
+   
+   @RequestMapping(method = RequestMethod.GET, path = "/register/userAvailable")
+   public ResponseEntity isUserAvailable (@RequestParam(name = "email") String email){
+      return ResponseEntity.ok(service.emailAvailable(email));
    }
 
 }

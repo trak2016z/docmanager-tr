@@ -2,7 +2,7 @@
 
 <head>
 	<title>Rejestracja</title>
-	<meta charset="UTF-8">
+	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="bower_components/jqueryui/themes/base/jquery-ui.css" />
 	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
@@ -50,41 +50,93 @@
 		<!-- /.container-fluid -->
 	</nav>
 	<div id="form-register">
-		<div class="input-group">
-			<span class="input-group-addon "><div class="form-register-input-cap">@</div></span>
-			<input type="text" class="form-control email-edit" placeholder="...@domena.com" aria-describedby="basic-addon1">
+		<div class="email-group">
+			<div class="input-group">
+				<span class="input-group-addon "><div class="form-register-input-cap">@</div></span>
+				<input type="text" class="form-control email-edit" placeholder="...@domena.com" aria-describedby="basic-addon1">
+			</div>
+			<div class="warn email-warn" />
 		</div>
-		<div class="input-group">
-			<span class="input-group-addon"><div class=" form-register-input-cap">HASŁO</div></span>
-			<input type="password" class="form-control pw-edit" placeholder="8 znakow" aria-describedby="basic-addon1">
+		<div class="pw-group">
+			<div class="input-group">
+				<span class="input-group-addon"><div class=" form-register-input-cap">HASŁO</div></span>
+				<input type="password" class="form-control pw-edit" placeholder="8 znakow" aria-describedby="basic-addon1">
+			</div>
+			<div class="warn pw-warn" />
 		</div>
-		<div class="input-group">
-			<span class="input-group-addon"><div class="form-register-input-cap">IMIĘ</div></span>
-			<input type="text" class="form-control fname-edit" aria-describedby="basic-addon1">
+		<div class="fname-group">
+			<div class="input-group">
+				<span class="input-group-addon"><div class="form-register-input-cap">IMIĘ</div></span>
+				<input type="text" class="form-control fname-edit" aria-describedby="basic-addon1">
+			</div>
+			<div class="warn fname-warn" />
 		</div>
-		<div class="input-group">
-			<span class="input-group-addon"><div class=" form-register-input-cap">IMIĘ 2</div></span>
-			<input type="text" class="form-control mname-edit" aria-describedby="basic-addon1">
+		<div class="mname-group">
+			<div class="input-group">
+				<span class="input-group-addon"><div class=" form-register-input-cap">IMIĘ 2</div></span>
+				<input type="text" class="form-control mname-edit" aria-describedby="basic-addon1">
+			</div>
 		</div>
-		<div class="input-group">
-			<span class="input-group-addon"><div class=" form-register-input-cap">NAZWISKO</div></span>
-			<input type="text" class="form-control lname-edit" aria-describedby="basic-addon1">
+
+		<div class="lname-group">
+			<div class="input-group">
+				<span class="input-group-addon"><div class=" form-register-input-cap">NAZWISKO</div></span>
+				<input type="text" class="form-control lname-edit" aria-describedby="basic-addon1">
+			</div>
+			<div class="warn lname-warn" />
 		</div>
-		<div class="input-group">
-			<span class="input-group-addon"><div class=" form-register-input-cap">DATA UR.</div></span>
-			<input type="date" class="form-control dob-edit" aria-describedby="basic-addon1">
+		<div class="dob-group">
+			<div class="input-group">
+				<span class="input-group-addon"><div class=" form-register-input-cap">DATA UR.</div></span>
+				<input type="date" class="form-control dob-edit" aria-describedby="basic-addon1">
+			</div>
+			<div class="warn dob-warn" />
 		</div>
-		<div class="input-group">
-			<span class="input-group-addon"><div style="display: inline-block;" class="form-register-input-cap fa fa-phone"></div></span>
-			<input type="text" class="form-control phone-edit" aria-describedby="basic-addon1">
+		<div class="phone-group">
+			<div class="input-group">
+				<span class="input-group-addon"><div style="display: inline-block;" class="form-register-input-cap fa fa-phone"></div></span>
+				<input type="text" class="form-control phone-edit" aria-describedby="basic-addon1">
+			</div>
+			<div class="warn phone-warn" />
 		</div>
 		<button type="button" class="btn btn-default form-register-button">Zarejestruj</button>
+	</div>
+	<div class="modal fade" id="registerFailedModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Błąd</h4>
+				</div>
+				<div class="modal-body">
+					Błąd na serwerze. Rejestracja się nie powiodła.
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="registerSuccededModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">Powodzenie</h4>
+				</div>
+				<div class="modal-body">
+					Rejestracja się powiodła. Nastąpi przekierowanie na stronę głowną.
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="succededbtn btn btn-default" data-dismiss="modal">OK</button>
+				</div>
+			</div>
+		</div>
 	</div>
 	<script src="bower_components/jquery/dist/jquery.js" type="text/javascript"></script>
 	<script src="bower_components/jqueryui/jquery-ui.js" type="text/javascript"></script>
 	<script src="bower_components/moment/moment.js" type="text/javascript"></script>
 	<script src="bower_components/bootstrap/dist/js/bootstrap.js" type="text/javascript"></script>
-        <script src="bower_components/jsSHA/src/sha.js" type="text/javascript"></script>
+	<script src="bower_components/jsSHA/src/sha.js" type="text/javascript"></script>
 	<script src="bundle.js" type="text/javascript"></script>
 </body>
 

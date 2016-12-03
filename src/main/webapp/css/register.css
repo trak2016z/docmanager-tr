@@ -19,3 +19,7 @@
     position: absolute;
     right: 20%;
 }
+
+.warn {
+    color: red;
+}

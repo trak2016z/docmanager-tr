@@ -41,6 +41,11 @@ public class UserPersistenceService {
       }
    }
    
+   public Boolean userExist(String email){
+      User u = repository.findUserByEmail(email);
+      return u!=null;
+   }
+   
    public void registerUser (User u) throws AlreadyExistException{
       User dbUser = this.repository.findUserByEmail(u.getEmail());
       if (dbUser != null){
