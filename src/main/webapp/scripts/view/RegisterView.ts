@@ -27,7 +27,6 @@ export class RegisterView {
     public init(): void {
         this.form = $('#form-register');
         this.registerButton = this.form.find('.form-register-button');
-        this.encryptor = new jsSHA('SHA-512', "TEXT");
         this.registerFailedModal = $('#registerFailedModal');
         this.registerSuccededModal = $('#registerSuccededModal');
 
@@ -61,9 +60,7 @@ export class RegisterView {
     }
 
     private encryptPassword(userData: RegisteredUser): RegisteredUser {
-        this.encryptor.update(userData.password);
-        let encryptedPw = this.encryptor.getHash("HEX");
-        userData.password = encryptedPw;
+        userData.password = CryptoJS.SHA512(userData.password).toString();
         return userData;
     }
 

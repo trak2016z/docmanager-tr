@@ -1,7 +1,6 @@
 package pl.ksprzk.docmanager.persistence.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import pl.ksprzk.docmanager.domain.login.LoginUserData;
 import pl.ksprzk.docmanager.integration.exceptions.AlreadyExistException;
@@ -27,10 +26,9 @@ public class UserPersistenceService {
       return repository.findAll();
    }
 
-   @Cacheable
    public LoginUserData provideLogonData(String email, String password) throws NoSuchUserException, PermissionDeniedException {
-      User user = repository.findUserByEmailAndPassword(email, password);
-      if (user == null) {
+      User user = repository.findUserByEmail(email);
+      if (user == null || !user.getPassword().equals(password)) {
          throw new NoSuchUserException();
       } else if (AuthRules.isEligibleToLogin(user)) {
          throw new PermissionDeniedException();

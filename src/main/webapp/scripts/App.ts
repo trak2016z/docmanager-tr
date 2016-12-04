@@ -1,7 +1,8 @@
 /// <reference path="../typings/index.d.ts" />
 //@ sourceMappingUrl=../bundle.js.map
 import { RegisterView } from './view/RegisterView';
-import * as jQuery from "jquery"
+import { LoginView } from './view/LoginView';
+import * as jQuery from "jquery";
 export class App {
     constructor() {
     }
@@ -13,6 +14,9 @@ window.onload = () => {
     switch (openedSite) {
         case 'register' : 
         currentView = new RegisterView();
+        break;
+        case 'login' : 
+        currentView = new LoginView();
         break;
     }
 }

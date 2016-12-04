@@ -1,0 +1,47 @@
+.form-login-input-cap {
+    width: 70px;
+}
+
+#form-login {
+    position: relative;
+    margin-top: 20px;
+    padding-left: 20%;
+    padding-right: 20%;
+}
+
+#form-login .input-group {
+    position: relative;
+    margin-bottom: 5px;
+
+}
+
+.form-login-button {
+    position: absolute;
+    right: 20%;
+}
+
+.form-reset-input-cap {
+    width: 70px;
+}
+
+#form-reset {
+    position: relative;
+    margin-top: 20px;
+    padding-left: 20%;
+    padding-right: 20%;
+}
+
+#form-reset .input-group {
+    position: relative;
+    margin-bottom: 5px;
+
+}
+
+.form-reset-button {
+    position: absolute;
+    right: 20%;
+}
+
+.warn {
+    color: red;
+}

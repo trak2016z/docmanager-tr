@@ -1,5 +1,6 @@
 package pl.ksprzk.docmanager.domain.login;
 
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +25,7 @@ public class RegisterController {
    }
    
    @RequestMapping(method = RequestMethod.POST, path = "/register/registerUser")
-   public ResponseEntity registerUser (@RequestBody UserDTO user) throws AlreadyExistException{
+   public ResponseEntity registerUser (@RequestBody UserDTO user, HttpSession session) throws AlreadyExistException{
       service.registerUser(user);
       return ResponseEntity.ok().build();
    }

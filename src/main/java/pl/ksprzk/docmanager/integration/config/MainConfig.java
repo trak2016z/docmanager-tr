@@ -23,6 +23,7 @@ import pl.ksprzk.docmanager.App;
 @EnableCaching
 public class MainConfig {
 
+
    @Bean
    CacheManager cacheManager() {
       GuavaCacheManager cacheManager = new GuavaCacheManager("docCache");
