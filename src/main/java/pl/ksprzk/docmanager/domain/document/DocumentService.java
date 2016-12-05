@@ -1,5 +1,6 @@
 package pl.ksprzk.docmanager.domain.document;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
@@ -15,21 +16,22 @@ import org.springframework.web.multipart.MultipartFile;
 public class DocumentService {
 
    private final String PATH = "storage";
+   private final ObjectMapper mapper;
 
    public DocumentService() {
       File file = new File(PATH);
-      if (!file.exists()){
+      if (!file.exists()) {
          file.mkdir();
       }
+      mapper = new ObjectMapper();
    }
 
-   
-   
-   void saveFile(MultipartFile file) throws IOException {
+   void saveFile(MultipartFile file, String strigifiedData) throws IOException {
 
-//      String extension = getExtension(file.getOriginalFilename());
+      String extension = getExtension(file.getOriginalFilename());
+      DocumentData data = mapper.readValue(strigifiedData, DocumentData.class);
       String newFileName = generateFilename();
-      File savedFile = new File(PATH +"/"+ newFileName);
+      File savedFile = new File(PATH + "/" + newFileName);
       savedFile.createNewFile();
       file.transferTo(savedFile);
 
@@ -40,8 +42,13 @@ public class DocumentService {
    }
 
    private String getExtension(String filename) {
-      String[] splittedName = filename.split(".");
-      return splittedName[splittedName.length];
+      String[] splittedName = filename.split("\\.");
+      if (splittedName.length > 1) {
+         return splittedName[splittedName.length - 1];
+      }
+      else {
+         return "";
+      }
    }
 
 }

@@ -1,15 +1,17 @@
+import { DocumentData } from '../model/DocumentData';
+
 export class DocumentService {
-    public static uploadFile(file) {
+    public static uploadFile(file, data : DocumentData) {
         var url = 'document/fileUpload';
         var xhr = new XMLHttpRequest();
         var formData = new FormData();
         xhr.open("POST", url, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                // Every thing ok, file uploaded
-                console.log(xhr.responseText); // handle response.
+                console.log(xhr.responseText);
             }
         };
+        formData.append("data", JSON.stringify(data));
         formData.append("upload_file", file);
         xhr.send(formData);
     }

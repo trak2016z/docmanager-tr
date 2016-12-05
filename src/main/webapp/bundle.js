@@ -389,10 +389,20 @@
 	            return element.files[0];
 	        };
 	        this.getFiles = getFiles;
+	        this.nameInput = $('#docupload-form .name-input');
+	        this.noteInput = $('#docupload-form .note-input');
+	        this.keywordsInput = $('#docupload-form .keywords-input');
+	        this.publicInput = $('#docupload-form .public-input');
 	        var button = $('#docupload-form .uploadButton');
 	        button.click(function () {
 	            var file = _this.getFiles(_this.fileInput);
-	            DocumentService_1.DocumentService.uploadFile(file);
+	            var data = {
+	                isPublic: _this.publicInput.is(':checked'),
+	                keywords: _this.keywordsInput.val(),
+	                name: _this.nameInput.val(),
+	                note: _this.noteInput.val()
+	            };
+	            DocumentService_1.DocumentService.uploadFile(file, data);
 	        });
 	    }
 	    return DocumentView;
@@ -408,17 +418,17 @@
 	var DocumentService = (function () {
 	    function DocumentService() {
 	    }
-	    DocumentService.uploadFile = function (file) {
+	    DocumentService.uploadFile = function (file, data) {
 	        var url = 'document/fileUpload';
 	        var xhr = new XMLHttpRequest();
 	        var formData = new FormData();
 	        xhr.open("POST", url, true);
 	        xhr.onreadystatechange = function () {
 	            if (xhr.readyState == 4 && xhr.status == 200) {
-	                // Every thing ok, file uploaded
-	                console.log(xhr.responseText); // handle response.
+	                console.log(xhr.responseText);
 	            }
 	        };
+	        formData.append("data", JSON.stringify(data));
 	        formData.append("upload_file", file);
 	        xhr.send(formData);
 	    };

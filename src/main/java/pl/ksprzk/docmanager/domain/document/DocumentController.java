@@ -15,13 +15,13 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping(path = "/document")
 public class DocumentController {
-   
+
    @Autowired
    DocumentService service;
-   
+
    @RequestMapping(path = "/fileUpload")
-   public ResponseEntity uploadFile (@RequestParam("upload_file")MultipartFile file) throws IOException{
-      service.saveFile(file);
+   public ResponseEntity uploadFile(@RequestParam("data") String data, @RequestParam("upload_file") MultipartFile file) throws IOException {
+      service.saveFile(file, data);
       return ResponseEntity.ok().build();
    }
 }
