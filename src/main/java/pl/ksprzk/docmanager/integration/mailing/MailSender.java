@@ -40,7 +40,21 @@ public class MailSender {
       }
 
    }
-
+   
+   public static void sendPasswordMessage(String newPassword, String target){
+      try {
+         Properties messageDetails = new Properties();
+         messageDetails.load(MailSender.class.getResourceAsStream("/resetPassword.properties"));
+         Message message = getInitializedMessage();
+         message.setSubject(messageDetails.getProperty("subject"));
+         message.setText(messageDetails.getProperty("content")+newPassword);
+         message.addRecipient(Message.RecipientType.TO, new InternetAddress(target));
+         Transport.send(message);
+      }catch(Exception ex){
+         ex.printStackTrace();
+      }
+   }
+   
    public static void sendMessage(String predefienedMessage, String target) {
       try {
          Properties messageDetails = new Properties();

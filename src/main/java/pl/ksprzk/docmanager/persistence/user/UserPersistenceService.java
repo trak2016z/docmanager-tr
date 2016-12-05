@@ -30,7 +30,7 @@ public class UserPersistenceService {
       User user = repository.findUserByEmail(email);
       if (user == null || !user.getPassword().equals(password)) {
          throw new NoSuchUserException();
-      } else if (AuthRules.isEligibleToLogin(user)) {
+      } else if (!AuthRules.isEligibleToLogin(user)) {
          throw new PermissionDeniedException();
       } else {
          LoginUserData data = new LoginUserData.LoginUserDataBuilder(user.getId(), user.getFirstName(), user.getPermission(),
@@ -51,6 +51,17 @@ public class UserPersistenceService {
       }
       else {
          this.repository.save(u);
+      }
+   }
+   
+   public void resetPassword (String email, String newPassword) throws NoSuchUserException {
+      User dbUser = this.repository.findUserByEmail(email);
+      if (dbUser == null){
+         throw new NoSuchUserException();
+      }
+      else {
+         dbUser.setPassword(newPassword);
+         this.repository.save(dbUser);
       }
    }
 

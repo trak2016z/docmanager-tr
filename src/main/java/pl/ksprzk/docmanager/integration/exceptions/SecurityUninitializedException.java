@@ -1,9 +1,13 @@
 package pl.ksprzk.docmanager.integration.exceptions;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
 /**
  *
  * @author Przemysław Kasprzyk
  */
+@ResponseStatus(HttpStatus.FORBIDDEN)
 public class SecurityUninitializedException extends Exception {
 
    private final static String MESSAGE = "Could not initialize security module";

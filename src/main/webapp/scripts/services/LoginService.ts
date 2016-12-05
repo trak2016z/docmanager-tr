@@ -15,4 +15,16 @@ export class LoginService {
         }).done(successHandler).fail(failHandler);
 
     }
+
+    public static resetPassword(email: string, successHandler, failHandler) {
+
+        let request = $.ajax({
+            url: 'loginservice/reset',
+            context: document.body,
+            type: 'GET',
+            dataType: 'text',
+            async: false,
+            data: 'email=' + email
+        }).done(successHandler).fail(failHandler);
+    }
 }
