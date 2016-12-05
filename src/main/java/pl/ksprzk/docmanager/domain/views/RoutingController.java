@@ -34,4 +34,9 @@ public class RoutingController {
    public String getRegistrationView() {
       return "/views/register.html";
    }
+   
+   @RequestMapping(path = "/upload")
+   public String getDocumentUploadView() {
+      return "/views/docupload.html";
+   }
 }

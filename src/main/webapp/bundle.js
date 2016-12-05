@@ -49,6 +49,7 @@
 	//@ sourceMappingUrl=../bundle.js.map
 	var RegisterView_1 = __webpack_require__(1);
 	var LoginView_1 = __webpack_require__(4);
+	var DocumentView_1 = __webpack_require__(6);
 	var App = (function () {
 	    function App() {
 	    }
@@ -64,6 +65,9 @@
 	            break;
 	        case 'login':
 	            currentView = new LoginView_1.LoginView();
+	            break;
+	        case 'upload':
+	            currentView = new DocumentView_1.DocumentView();
 	            break;
 	    }
 	};
@@ -369,6 +373,58 @@
 	    return LoginService;
 	}());
 	exports.LoginService = LoginService;
+
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var DocumentService_1 = __webpack_require__(7);
+	var DocumentView = (function () {
+	    function DocumentView() {
+	        var _this = this;
+	        this.fileInput = $('#fileinput')[0];
+	        var getFiles = function (element) {
+	            return element.files[0];
+	        };
+	        this.getFiles = getFiles;
+	        var button = $('#docupload-form .uploadButton');
+	        button.click(function () {
+	            var file = _this.getFiles(_this.fileInput);
+	            DocumentService_1.DocumentService.uploadFile(file);
+	        });
+	    }
+	    return DocumentView;
+	}());
+	exports.DocumentView = DocumentView;
+
+
+/***/ },
+/* 7 */
+/***/ function(module, exports) {
+
+	"use strict";
+	var DocumentService = (function () {
+	    function DocumentService() {
+	    }
+	    DocumentService.uploadFile = function (file) {
+	        var url = 'document/fileUpload';
+	        var xhr = new XMLHttpRequest();
+	        var formData = new FormData();
+	        xhr.open("POST", url, true);
+	        xhr.onreadystatechange = function () {
+	            if (xhr.readyState == 4 && xhr.status == 200) {
+	                // Every thing ok, file uploaded
+	                console.log(xhr.responseText); // handle response.
+	            }
+	        };
+	        formData.append("upload_file", file);
+	        xhr.send(formData);
+	    };
+	    return DocumentService;
+	}());
+	exports.DocumentService = DocumentService;
 
 
 /***/ }
