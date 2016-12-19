@@ -16,7 +16,7 @@ import pl.ksprzk.docmanager.integration.exceptions.SecurityUninitializedExceptio
 public class Security {
 
    private static Security instance;
-   private Map<String, Credentials> authMap;
+   private final Map<String, Credentials> authMap;
 
    private Security() {
       this.authMap = new HashMap<>();
@@ -30,6 +30,11 @@ public class Security {
    
    public Boolean isValid(HttpServletRequest request) throws SecurityUninitializedException, PermissionDeniedException {
       return isValid(request, null);
+   }
+   
+   public Credentials getCredentials (HttpServletRequest request){
+      String sessionId = request.getSession().getId();
+      return authMap.get(sessionId);
    }
 
    public Boolean isValid(HttpServletRequest request, Character permission) throws SecurityUninitializedException, PermissionDeniedException {
@@ -55,7 +60,7 @@ public class Security {
       return result;
    }
    
-   public Boolean validate (HttpServletRequest request, Credentials credentials) throws SecurityUninitializedException, NoSuchUserException, PermissionDeniedException{
+   public LoginResponse validate (HttpServletRequest request, Credentials credentials) throws SecurityUninitializedException, NoSuchUserException, PermissionDeniedException{
        HttpSession session = request.getSession();
        String sessionId = session.getId();
        credentials.setSessionId(sessionId);
@@ -64,7 +69,8 @@ public class Security {
        session.setAttribute("auth_tkt", authTkt);
        session.setAttribute("user", credentials.getUsername());
        this.authMap.put(sessionId, credentials);
-       return isValid(request);
+       isValid(request);
+       return new LoginResponse(credentials);
    }
 
 }

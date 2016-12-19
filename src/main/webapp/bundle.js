@@ -316,8 +316,10 @@
 	                email: email,
 	                password: password
 	            };
-	            LoginService_1.LoginService.loginUser(data, function () {
-	                document.cookie = "cookie1=authenticated;";
+	            LoginService_1.LoginService.loginUser(data, function (response) {
+	                response = JSON.parse(response);
+	                document.cookie = "auth_tkt=" + response.auth_tkt + ";";
+	                document.cookie = "user=" + response.email + ";";
 	                window.location.href = window.location.href + '/..';
 	            }, function () {
 	                _this.loginFailedModal.modal('toggle');
@@ -431,6 +433,23 @@
 	        formData.append("data", JSON.stringify(data));
 	        formData.append("upload_file", file);
 	        xhr.send(formData);
+	    };
+	    DocumentService.uploadAvatar = function (file, data) {
+	        var url = 'document/avatar';
+	        var xhr = new XMLHttpRequest();
+	        var formData = new FormData();
+	        xhr.open("POST", url, true);
+	        xhr.onreadystatechange = function () {
+	            if (xhr.readyState == 4 && xhr.status == 200) {
+	                console.log(xhr.responseText);
+	            }
+	        };
+	        formData.append("data", JSON.stringify(data));
+	        formData.append("upload_file", file);
+	        xhr.send(formData);
+	    };
+	    DocumentService.getFile = function (id) {
+	        window.location.href = 'document/fileDownload/' + id;
 	    };
 	    return DocumentService;
 	}());

@@ -8,4 +8,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  */
 interface DocumentRepository extends PagingAndSortingRepository<Document, Integer>{
 
+   Document findDocumentByName(String name);
+   
 }

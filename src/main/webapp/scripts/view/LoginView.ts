@@ -1,6 +1,7 @@
 import * as jQuery from "jquery";
-import { LoginData } from '../model/LoginData'
-import { LoginService } from '../services/LoginService'
+import { LoginData } from '../model/LoginData';
+import { LoginService } from '../services/LoginService';
+import { LoginResponse } from '../model/LoginResponse';
 export class LoginView {
 
     private loginForm: JQuery;
@@ -26,8 +27,10 @@ export class LoginView {
                 email: email,
                 password: password
             }
-            LoginService.loginUser(data, () => {
-                document.cookie = "cookie1=authenticated;";
+            LoginService.loginUser(data, (response) => {
+                response = JSON.parse(response);
+                document.cookie = "auth_tkt="+response.auth_tkt+";";
+                document.cookie = "user="+response.email+";";
                 window.location.href = window.location.href + '/..';
             }, () => {
                 this.loginFailedModal.modal('toggle');

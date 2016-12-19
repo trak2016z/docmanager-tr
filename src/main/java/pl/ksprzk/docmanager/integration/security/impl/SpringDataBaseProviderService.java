@@ -2,7 +2,7 @@ package pl.ksprzk.docmanager.integration.security.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.ksprzk.docmanager.domain.login.LoginUserData;
+import pl.ksprzk.docmanager.integration.security.LoginUserData;
 import pl.ksprzk.docmanager.integration.exceptions.NoSuchUserException;
 import pl.ksprzk.docmanager.integration.exceptions.PermissionDeniedException;
 import pl.ksprzk.docmanager.integration.security.Credentials;
@@ -28,6 +28,7 @@ public class SpringDataBaseProviderService implements DatabaseProvider {
       credentials.setUsername(username);
       credentials.setPermission(data.getPermission());
       credentials.setAuthTk(Generators.generateAuthTk());
+      credentials.setName(data.getName());
       return credentials;
    }
 

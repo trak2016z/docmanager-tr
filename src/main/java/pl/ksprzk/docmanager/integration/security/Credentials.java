@@ -11,7 +11,16 @@ public class Credentials {
    private String username;
    private char permission;
    private String password;
+   private String name;
 
+   public String getName() {
+      return name;
+   }
+
+   public void setName(String name) {
+      this.name = name;
+   }
+   
    public String getPassword() {
       return password;
    }

@@ -1,4 +1,4 @@
-package pl.ksprzk.docmanager.domain.login;
+package pl.ksprzk.docmanager.integration.security;
 
 /**
  *
@@ -7,7 +7,7 @@ package pl.ksprzk.docmanager.domain.login;
 public class LoginUserData {
 
    protected int id;
-   protected String firstName;
+   protected String name;
    protected char permission;
    protected Boolean trusted;
    protected String avatar;
@@ -16,8 +16,8 @@ public class LoginUserData {
       return id;
    }
 
-   public String getFirstName() {
-      return firstName;
+   public String getName() {
+      return name;
    }
 
    public char getPermission() {
@@ -36,9 +36,9 @@ public class LoginUserData {
 
    }
 
-   private LoginUserData(int id, String firstName, char permission, Boolean trusted, String avatar) {
+   private LoginUserData(int id, String name, char permission, Boolean trusted, String avatar) {
       this.id = id;
-      this.firstName = firstName;
+      this.name = name;
       this.permission = permission;
       this.trusted = trusted;
       this.avatar = avatar;
@@ -47,14 +47,14 @@ public class LoginUserData {
    public static class LoginUserDataBuilder {
 
       private final int id;
-      private final String firstName;
+      private final String name;
       private final char permission;
       private final Boolean trusted;
       private String avatar;
 
-      public LoginUserDataBuilder(int id, String firstName, char permission, Boolean trusted) {
+      public LoginUserDataBuilder(int id, String name, char permission, Boolean trusted) {
          this.id = id;
-         this.firstName = firstName;
+         this.name = name;
          this.permission = permission;
          this.trusted = trusted;
       }
@@ -65,7 +65,7 @@ public class LoginUserData {
       }
 
       public LoginUserData build() {
-         return new LoginUserData(id, firstName, permission, trusted, avatar);
+         return new LoginUserData(id, name, permission, trusted, avatar);
       }
    }
 }
