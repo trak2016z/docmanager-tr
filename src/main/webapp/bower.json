@@ -16,12 +16,7 @@
   ],
   "dependencies": {
     "jquery": "^3.1.1",
-    "primeui": "^4.1.15",
-    "moment": "^2.15.2",
     "bootstrap": "^3.3.7",
-    "jsviews": "^0.9.82",
-    "jsrender": "^0.9.82",
-    "jsSHA": "jssha#^2.2.0",
     "crypto-js": "^3.1.8"
   }
 }

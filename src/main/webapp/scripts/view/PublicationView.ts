@@ -1,8 +1,7 @@
-import * as moment from 'moment';
 import { PublicationIndicator } from "../model/PublicationIndicator";
 import { DocumentService } from "../services/DocumentService";
 import { CookieUtil } from "../utils/CookieUtil";
-
+import * as moment from "moment";
 export class PublicationView {
 
     private publicationTable: JQuery;
@@ -17,6 +16,7 @@ export class PublicationView {
     }
 
     private resolveUserPublications() {
+        
         let handler = (response: string) => {
             let publications: Array<PublicationIndicator> = JSON.parse(response);
             let tableBody: string = "";
