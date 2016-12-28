@@ -1,5 +1,7 @@
 package pl.ksprzk.docmanager.domain.document;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
 import pl.ksprzk.docmanager.persistence.document.Document;
 import pl.ksprzk.docmanager.persistence.user.User;
 
@@ -18,6 +20,19 @@ public class DocumentFactory {
       document.setKeywords(data.getKeywords());
       document.setVersion(1);
       document.setNote(data.getNote());
+      document.setUpdateTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
       return document;
+   }
+   
+   public static DocumentData provideJsonDocument (Document document){
+      DocumentData data = new DocumentData();
+      data.setName(document.getName());
+      data.setKeywords(document.getKeywords());
+      Calendar date = Calendar.getInstance();
+      date.setTimeInMillis(document.getUpdateTime().getTime());
+      data.setLastUpdate(date);
+      data.setNote(document.getNote());
+      data.setPublicVisible(document.isPublicFlag());
+      return data;
    }
 }

@@ -29,6 +29,11 @@ public class RoutingController {
    public String getPublicationView() {
       return "/views/publicationview.html";
    }
+   
+   @RequestMapping(path = "/mydocuments")
+   public String getMyDocuments (){
+      return "/views/mydocuments.html";
+   }
 
    @RequestMapping(path = "/register")
    public String getRegistrationView() {

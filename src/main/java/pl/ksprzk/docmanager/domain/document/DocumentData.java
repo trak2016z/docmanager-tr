@@ -1,6 +1,7 @@
 package pl.ksprzk.docmanager.domain.document;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.Calendar;
 
 /**
  *
@@ -13,7 +14,16 @@ public class DocumentData {
    private String keywords;
    private String name;
    private String note;
+   private Calendar lastUpdate;
 
+   public Calendar getLastUpdate() {
+      return lastUpdate;
+   }
+
+   public void setLastUpdate(Calendar lastUpdate) {
+      this.lastUpdate = lastUpdate;
+   }
+   
    public boolean isPublicVisible() {
       return publicVisible;
    }

@@ -28,6 +28,14 @@ public class Security {
       return instance;
    }  
    
+   public void isAuthorizedOwner (HttpServletRequest request, String user) throws PermissionDeniedException{
+      HttpSession session = request.getSession();
+      Credentials credentials = authMap.get(session.getId());
+      if (!credentials.getUsername().equals(user)){
+         throw new PermissionDeniedException();
+      }
+   }
+   
    public Boolean isValid(HttpServletRequest request) throws SecurityUninitializedException, PermissionDeniedException {
       return isValid(request, null);
    }

@@ -9,17 +9,11 @@ public class LoginResponse {
    private final String name;
    private final String auth_tkt;
    private final char permission;
-   private final String email;
 
    public LoginResponse(Credentials credentials) {
       name = credentials.getUsername();
       auth_tkt = credentials.getAuthTk();
       permission = credentials.getPermission();
-      email = credentials.getName();
-   }
-
-   public String getEmail() {
-      return email;
    }
 
    public char getPermission() {

@@ -3,11 +3,11 @@
 import { RegisterView } from './view/RegisterView';
 import { LoginView } from './view/LoginView';
 import { DocumentView } from './view/DocumentView';
+import { PublicationView } from './view/PublicationView'
 import * as jQuery from "jquery";
 export class App {
     constructor() {
     }
-
 }
 window.onload = () => {
     var openedSite = window.location.toString().split("/").pop();
@@ -21,6 +21,9 @@ window.onload = () => {
             break;
         case 'upload':
             currentView = new DocumentView();
+            break;
+        case 'mydocuments':
+            currentView = new PublicationView();
             break;
     }
 }

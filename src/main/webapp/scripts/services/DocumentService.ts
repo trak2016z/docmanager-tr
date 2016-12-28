@@ -1,7 +1,8 @@
 import { DocumentData } from '../model/DocumentData';
 
+
 export class DocumentService {
-    public static uploadFile(file, data : DocumentData) {
+    public static uploadFile(file, data: DocumentData) {
         var url = 'document/fileUpload';
         var xhr = new XMLHttpRequest();
         var formData = new FormData();
@@ -16,7 +17,19 @@ export class DocumentService {
         xhr.send(formData);
     }
 
-    public static uploadAvatar(file, data){
+    public static getUserPublications(user: string, handler: any) {
+        let request = $.ajax({
+            url: 'document/myDocuments',
+            context: document.body,
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'text',
+            async: true,
+            data: JSON.stringify({user: user})
+        }).done(handler);
+    }
+
+    public static uploadAvatar(file, data) {
         let url = 'document/avatar';
         var xhr = new XMLHttpRequest();
         var formData = new FormData();
@@ -31,8 +44,8 @@ export class DocumentService {
         xhr.send(formData);
     }
 
-    public static getFile(id : number){
-        window.location.href = 'document/fileDownload/'+id;
+    public static getFile(id: number) {
+        window.location.href = 'document/fileDownload/' + id;
     }
 
 }

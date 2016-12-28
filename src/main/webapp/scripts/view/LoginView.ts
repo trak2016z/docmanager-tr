@@ -30,7 +30,7 @@ export class LoginView {
             LoginService.loginUser(data, (response) => {
                 response = JSON.parse(response);
                 document.cookie = "auth_tkt="+response.auth_tkt+";";
-                document.cookie = "user="+response.email+";";
+                document.cookie = "user="+response.name+";";
                 window.location.href = window.location.href + '/..';
             }, () => {
                 this.loginFailedModal.modal('toggle');

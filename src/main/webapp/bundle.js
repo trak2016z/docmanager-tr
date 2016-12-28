@@ -50,6 +50,7 @@
 	var RegisterView_1 = __webpack_require__(1);
 	var LoginView_1 = __webpack_require__(4);
 	var DocumentView_1 = __webpack_require__(6);
+	var PublicationView_1 = __webpack_require__(8);
 	var App = (function () {
 	    function App() {
 	    }
@@ -68,6 +69,9 @@
 	            break;
 	        case 'upload':
 	            currentView = new DocumentView_1.DocumentView();
+	            break;
+	        case 'mydocuments':
+	            currentView = new PublicationView_1.PublicationView();
 	            break;
 	    }
 	};
@@ -319,7 +323,7 @@
 	            LoginService_1.LoginService.loginUser(data, function (response) {
 	                response = JSON.parse(response);
 	                document.cookie = "auth_tkt=" + response.auth_tkt + ";";
-	                document.cookie = "user=" + response.email + ";";
+	                document.cookie = "user=" + response.name + ";";
 	                window.location.href = window.location.href + '/..';
 	            }, function () {
 	                _this.loginFailedModal.modal('toggle');
@@ -434,6 +438,17 @@
 	        formData.append("upload_file", file);
 	        xhr.send(formData);
 	    };
+	    DocumentService.getUserPublications = function (user, handler) {
+	        var request = $.ajax({
+	            url: 'document/myDocuments',
+	            context: document.body,
+	            type: 'POST',
+	            contentType: 'application/json; charset=utf-8',
+	            dataType: 'text',
+	            async: true,
+	            data: JSON.stringify({ user: user })
+	        }).done(handler);
+	    };
 	    DocumentService.uploadAvatar = function (file, data) {
 	        var url = 'document/avatar';
 	        var xhr = new XMLHttpRequest();
@@ -454,6 +469,65 @@
 	    return DocumentService;
 	}());
 	exports.DocumentService = DocumentService;
+
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var moment = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"moment\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var DocumentService_1 = __webpack_require__(7);
+	var CookieUtil_1 = __webpack_require__(9);
+	var PublicationView = (function () {
+	    function PublicationView() {
+	        this.init();
+	    }
+	    PublicationView.prototype.init = function () {
+	        this.publicationTable = $('#publications tbody');
+	        this.resolveUserPublications();
+	    };
+	    PublicationView.prototype.resolveUserPublications = function () {
+	        var _this = this;
+	        var handler = function (response) {
+	            var publications = JSON.parse(response);
+	            var tableBody = "";
+	            publications.forEach(function (element) {
+	                tableBody += '<tr><td>' + element.name + '</td><td>' + moment(element.lastUpdate).format("DD-MM-YYYY HH:mm") + '</td></tr>';
+	            });
+	            _this.publicationTable.append(tableBody);
+	        };
+	        var user = CookieUtil_1.CookieUtil.getCookie('user');
+	        DocumentService_1.DocumentService.getUserPublications(user, handler);
+	    };
+	    return PublicationView;
+	}());
+	exports.PublicationView = PublicationView;
+
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	"use strict";
+	var CookieUtil = (function () {
+	    function CookieUtil() {
+	    }
+	    CookieUtil.getCookie = function (key) {
+	        var cookieName = key + '=';
+	        var cookiesArray = document.cookie.split(';');
+	        var foundCookie = cookiesArray.find(function (element) {
+	            return element.indexOf(cookieName) > 0;
+	        });
+	        if (foundCookie) {
+	            var cookieElements = foundCookie.split(cookieName);
+	            foundCookie = cookieElements[cookieElements.length - 1];
+	        }
+	        return foundCookie;
+	    };
+	    return CookieUtil;
+	}());
+	exports.CookieUtil = CookieUtil;
 
 
 /***/ }

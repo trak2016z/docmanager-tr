@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,6 +39,14 @@ public class DocumentController {
    public void downloadFile (@PathVariable("id")Integer id, HttpServletRequest request, HttpServletResponse response) throws SecurityUninitializedException, PermissionDeniedException, FileNotFoundException, IOException{
       Security.getInstance().isValid(request);
       service.downloadFile(response, id);
+   }
+   
+   @PostMapping(path = "/myDocuments")
+   public ResponseEntity getAllUserPublications (@RequestBody DocumentOwner user, HttpServletRequest request) throws SecurityUninitializedException, PermissionDeniedException{
+      Security security = Security.getInstance();
+      security.isValid(request);
+      security.isAuthorizedOwner(request, user.getUser());
+      return ResponseEntity.ok(service.getUserPublications(user));
    }
    
 }

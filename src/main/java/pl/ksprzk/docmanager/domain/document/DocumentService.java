@@ -6,7 +6,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -41,6 +43,15 @@ public class DocumentService {
          file.mkdir();
       }
       mapper = new ObjectMapper();
+   }
+   
+   List<DocumentData> getUserPublications (DocumentOwner owner){
+      List<Document> documents =service.getDocumentsByEmail(owner.getUser());
+      List<DocumentData> responseList = new ArrayList<>();
+      for(Document d : documents){
+         responseList.add(DocumentFactory.provideJsonDocument(d));
+      }
+      return responseList;
    }
 
    void saveFile(MultipartFile file, String strigifiedData, Credentials credentials) throws IOException {
@@ -77,4 +88,5 @@ public class DocumentService {
       }
    }
 
+   
 }
