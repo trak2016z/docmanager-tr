@@ -3,9 +3,9 @@ import { DocumentData } from '../model/DocumentData';
 
 export class DocumentService {
     public static uploadFile(file, data: DocumentData) {
-        var url = 'document/fileUpload';
-        var xhr = new XMLHttpRequest();
-        var formData = new FormData();
+        let url = 'document/fileUpload';
+        let xhr = new XMLHttpRequest();
+        let formData = new FormData();
         xhr.open("POST", url, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
@@ -18,7 +18,7 @@ export class DocumentService {
     }
 
     public static getUserPublications(user: string, handler: any) {
-        let request = $.ajax({
+        $.ajax({
             url: 'document/myDocuments',
             context: document.body,
             type: 'POST',
@@ -31,8 +31,8 @@ export class DocumentService {
 
     public static uploadAvatar(file, data) {
         let url = 'document/avatar';
-        var xhr = new XMLHttpRequest();
-        var formData = new FormData();
+        let xhr = new XMLHttpRequest();
+        let formData = new FormData();
         xhr.open("POST", url, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {

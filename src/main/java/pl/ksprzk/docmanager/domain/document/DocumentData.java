@@ -15,6 +15,15 @@ public class DocumentData {
    private String name;
    private String note;
    private Calendar lastUpdate;
+   private Integer id;
+
+   public Integer getId() {
+      return id;
+   }
+
+   public void setId(Integer id) {
+      this.id = id;
+   }
 
    public Calendar getLastUpdate() {
       return lastUpdate;

@@ -4,8 +4,14 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "bootstrap": "^3.3.7",
+    "crypto-js": "^3.1.9-1",
+    "fontawesome": "^4.7.0",
+    "jquery": "^3.1.1",
+    "jquery-ui": "^1.12.1",
     "moment": "^2.17.1",
-    "ts-loader": "^0.9.5"
+    "ts-loader": "^0.9.5",
+    "typescript-collections": "^1.2.3"
   },
   "devDependencies": {
     "typescript": "^2.0.7",

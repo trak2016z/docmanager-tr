@@ -7,7 +7,6 @@ module.exports = {
     filename: 'bundle.js',
     sourceMapFilename: "bundle.js.map",
   },
-  devtool: 'source-map',
   resolve: {
     extensions: [ '', '.webpack.js', '.web.js', '.ts', '.js']
   },

@@ -1,4 +1,5 @@
 export interface PublicationIndicator {
     name: string,
-    lastUpdate: Date
+    lastUpdate: Date,
+    id: number
 }

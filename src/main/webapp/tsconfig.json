@@ -2,8 +2,15 @@
   "compilerOptions": {
     "module": "commonjs",
     "sourceMap": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "target": "es5",
+    "lib": ["es5", "es6", "dom"],
+    "moduleResolution": "node"
   },
+  "exclude": [
+    "node_modules",
+    "typings"
+  ],
   "files": [
     "./bundle.js.map"
   ]

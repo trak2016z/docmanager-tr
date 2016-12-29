@@ -1,5 +1,4 @@
 import { DocumentData } from '../model/DocumentData'
-import * as jQuery from "jquery";
 import { DocumentService } from '../services/DocumentService';
 
 export class DocumentView {

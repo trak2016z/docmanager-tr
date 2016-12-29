@@ -4,7 +4,6 @@ import { RegisterView } from './view/RegisterView';
 import { LoginView } from './view/LoginView';
 import { DocumentView } from './view/DocumentView';
 import { PublicationView } from './view/PublicationView'
-import * as jQuery from "jquery";
 export class App {
     constructor() {
     }

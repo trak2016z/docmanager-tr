@@ -1,7 +1,5 @@
-import * as jQuery from "jquery";
 import { LoginData } from '../model/LoginData';
 import { LoginService } from '../services/LoginService';
-import { LoginResponse } from '../model/LoginResponse';
 export class LoginView {
 
     private loginForm: JQuery;

@@ -4,10 +4,8 @@ import { UserValidator } from '../utils/UserValidator';
 export class RegisterView {
     private form: JQuery;
     private registerButton: JQuery;
-    private encryptor;
     private registerFailedModal: JQuery;
     private registerSuccededModal: JQuery;
-    private inputs: any;
     private userValidator: UserValidator;
 
     private emailInput: JQuery;
@@ -152,11 +150,11 @@ export class RegisterView {
     private validatePassword(password: string): boolean {
         let warn = this.form.find('.pw-group .pw-warn');
         if (!password) {
-            warn.text('Nie podano has³‚a');
+            warn.text('Nie podano hasï¿½ï¿½a');
             return false;
         }
         else if (password.length < 8) {
-            warn.text('Has³‚o jest za krotkie');
+            warn.text('Hasï¿½ï¿½o jest za krotkie');
             return false;
         }
         return true;
@@ -170,11 +168,11 @@ export class RegisterView {
             return false;
         }
         if (!this.userValidator.isEmailValid(email)) {
-            warn.text('Nieprawid³‚owy adres');
+            warn.text('NieprawidÅ‚owy adres');
             return false;
         }
         RegisterService.checkAvailableEmail(email, (item: boolean) => {
-            warn.text('Adres zajê™ty');
+            warn.text('Adres zajÄ™ty');
             return !item;
         });
         return true;

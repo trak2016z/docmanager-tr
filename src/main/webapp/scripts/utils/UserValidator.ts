@@ -9,8 +9,6 @@ export class UserValidator {
         if (domainParts.length < 2){
             return false;
         }
-        // let regexp = new RegExp('[a-z][A-Z][0-9]','gi')
-        // let permittedSymbols = email.match('');
         return true;
     }
 }

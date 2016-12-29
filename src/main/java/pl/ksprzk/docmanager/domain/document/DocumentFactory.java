@@ -21,6 +21,7 @@ public class DocumentFactory {
       document.setVersion(1);
       document.setNote(data.getNote());
       document.setUpdateTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+      document.setId(data.getId());
       return document;
    }
    
@@ -33,6 +34,7 @@ public class DocumentFactory {
       data.setLastUpdate(date);
       data.setNote(document.getNote());
       data.setPublicVisible(document.isPublicFlag());
+      data.setId(document.getId());
       return data;
    }
 }
