@@ -1,3 +1,4 @@
+/// <reference path="../../typings/index.d.ts" />
 import { PublicationIndicator } from "../model/PublicationIndicator";
 import { DocumentService } from "../services/DocumentService";
 import { CookieUtil } from "../utils/CookieUtil";
