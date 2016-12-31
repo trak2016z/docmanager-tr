@@ -1,7 +1,9 @@
 package pl.ksprzk.docmanager.integration.security;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.apache.commons.lang3.StringUtils;
@@ -27,6 +29,14 @@ public class Security {
       }
       return instance;
    }  
+  
+   
+   public void isAuthorizedOwner (HttpServletRequest request) throws PermissionDeniedException{
+      String user = Arrays.stream(request.getCookies()).filter((Cookie c)->{
+         return c.getName().equalsIgnoreCase("user");
+      }).findFirst().get().getValue();
+      isAuthorizedOwner(request, user);
+   }
    
    public void isAuthorizedOwner (HttpServletRequest request, String user) throws PermissionDeniedException{
       HttpSession session = request.getSession();

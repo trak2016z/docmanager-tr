@@ -1,7 +1,10 @@
 package pl.ksprzk.docmanager.integration.config;
 
+import java.nio.charset.StandardCharsets;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -26,4 +29,13 @@ public class ServletConfig extends WebMvcConfigurerAdapter {
       return multipartResolver;
    }
    
+   @Bean
+   CharacterEncodingFilter characterEncodingFilter(){
+      return new CharacterEncodingFilter("UTF-8", true);
+   }
+   
+   @Bean
+   public StringHttpMessageConverter stringHttpMessageConverter() {
+       return new StringHttpMessageConverter(StandardCharsets.UTF_8);
+   }
 }

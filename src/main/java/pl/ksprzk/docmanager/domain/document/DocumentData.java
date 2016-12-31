@@ -16,6 +16,15 @@ public class DocumentData {
    private String note;
    private Calendar lastUpdate;
    private Integer id;
+   private FileDescription fileDescription;
+
+   public FileDescription getFileDescription() {
+      return fileDescription;
+   }
+
+   public void setFileDescription(FileDescription fileDescription) {
+      this.fileDescription = fileDescription;
+   }
 
    public Integer getId() {
       return id;

@@ -35,4 +35,12 @@ public class DocumentPersistenceService {
       User user = userService.getUser(email);
       return repository.findDocumentByUser(user);
    }
+   
+   public void deleteDocument (int id){
+      repository.delete(id);
+   }
+   
+   public void deleteDocument (Document document){
+      repository.delete(document);
+   }
 }

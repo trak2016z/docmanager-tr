@@ -31,7 +31,7 @@ export class DocumentView {
                 name: this.nameInput.val(),
                 note: this.noteInput.val()
             };
-            DocumentService.uploadFile(file, data);
+            DocumentService.uploadFile(file, data, ()=>{});
         });
     }
 

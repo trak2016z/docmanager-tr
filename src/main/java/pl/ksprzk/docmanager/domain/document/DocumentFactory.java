@@ -10,12 +10,12 @@ import pl.ksprzk.docmanager.persistence.user.User;
  * @author Przemysław Kasprzyk
  */
 public class DocumentFactory {
-   public static Document provideJpaDocument (DocumentData data, String filename, String extension, User user){
+   public static Document provideJpaDocument (DocumentData data, User user){
       Document document = new Document();
       document.setPublicFlag(data.isPublicVisible());
       document.setName(data.getName());
-      document.setFilename(filename);
-      document.setExtension(extension);
+      document.setFilename(data.getFileDescription().getFilename());
+      document.setExtension(data.getFileDescription().getExtension());
       document.setUser(user);
       document.setKeywords(data.getKeywords());
       document.setVersion(1);
@@ -35,6 +35,9 @@ public class DocumentFactory {
       data.setNote(document.getNote());
       data.setPublicVisible(document.isPublicFlag());
       data.setId(document.getId());
+      FileDescription fileDescription = new FileDescription();
+      fileDescription.setExtension(document.getExtension());
+      fileDescription.setFilename(document.getFilename());
       return data;
    }
 }

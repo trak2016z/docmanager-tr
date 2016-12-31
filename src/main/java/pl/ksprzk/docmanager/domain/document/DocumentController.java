@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,24 +30,39 @@ public class DocumentController {
    DocumentService service;
 
    @RequestMapping(path = "/fileUpload")
-   public ResponseEntity uploadFile(@RequestParam("data") String data, @RequestParam("upload_file") MultipartFile file, HttpServletRequest request) throws IOException, SecurityUninitializedException, PermissionDeniedException {
+   public ResponseEntity uploadFile(@RequestParam("upload_file") MultipartFile file, HttpServletRequest request) throws IOException, SecurityUninitializedException, PermissionDeniedException {
       Security.getInstance().isValid(request);
-      service.saveFile(file, data, Security.getInstance().getCredentials(request));
+      return ResponseEntity.ok(service.saveFile(file));
+   }
+
+   @PostMapping(path = "/updateFileData")
+   public ResponseEntity updateFileData(@RequestBody DocumentData data, HttpServletRequest request) throws SecurityUninitializedException, PermissionDeniedException {
+      Security.getInstance().isValid(request);
+      service.saveFileDataToDatabase(data, Security.getInstance().getCredentials(request));
       return ResponseEntity.ok().build();
    }
-   
+
    @RequestMapping(path = "/fileDownload/{id}")
-   public void downloadFile (@PathVariable("id")Integer id, HttpServletRequest request, HttpServletResponse response) throws SecurityUninitializedException, PermissionDeniedException, FileNotFoundException, IOException{
+   public void downloadFile(@PathVariable("id") Integer id, HttpServletRequest request, HttpServletResponse response) throws SecurityUninitializedException, PermissionDeniedException, FileNotFoundException, IOException {
       Security.getInstance().isValid(request);
       service.downloadFile(response, id);
    }
-   
+
    @PostMapping(path = "/myDocuments")
-   public ResponseEntity getAllUserPublications (@RequestBody DocumentOwner user, HttpServletRequest request) throws SecurityUninitializedException, PermissionDeniedException{
+   public ResponseEntity getAllUserPublications(@RequestBody DocumentOwner user, HttpServletRequest request) throws SecurityUninitializedException, PermissionDeniedException {
       Security security = Security.getInstance();
       security.isValid(request);
       security.isAuthorizedOwner(request, user.getUser());
       return ResponseEntity.ok(service.getUserPublications(user));
    }
-   
+
+   @DeleteMapping(path = "/{id}")
+   public ResponseEntity deleteDocument(@PathVariable(name = "id") int documentId, HttpServletRequest request) throws SecurityUninitializedException, PermissionDeniedException {
+      Security security = Security.getInstance();
+      security.isValid(request);
+      security.isAuthorizedOwner(request);
+      service.deleteDocument(documentId);
+      return ResponseEntity.ok().build();
+   }
+
 }
