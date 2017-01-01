@@ -1,6 +1,5 @@
 package pl.ksprzk.docmanager.domain.document;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -36,14 +35,17 @@ public class DocumentService {
    DocumentPersistenceService service;
 
    private final String PATH = "storage";
-   private final ObjectMapper mapper;
 
    public DocumentService() {
       File file = new File(PATH);
       if (!file.exists()) {
          file.mkdir();
       }
-      mapper = new ObjectMapper();
+   }
+
+   DocumentData getDocumentById(int id) {
+      Document document = service.getDocumentById(id);
+      return DocumentFactory.provideJsonDocument(document);
    }
 
    List<DocumentData> getUserPublications(DocumentOwner owner) {
@@ -67,10 +69,10 @@ public class DocumentService {
       if (StringUtils.isNoneEmpty(avatarFilename)) {
          File file = new File(PATH + "/" + avatarFilename);
          file.delete();
-      } 
+      }
    }
-   
-   void saveFileDataToDatabase (DocumentData data, Credentials credentials){
+
+   void saveFileDataToDatabase(DocumentData data, Credentials credentials) {
       User user = userService.getUser(credentials.getUsername());
       Document document = DocumentFactory.provideJpaDocument(data, user);
       service.saveDocument(document);
@@ -87,10 +89,22 @@ public class DocumentService {
 
    void downloadFile(HttpServletResponse response, Integer id) throws FileNotFoundException, IOException {
       Document document = service.getDocumentById(id);
-      File file = new File(document.getFilename() + "." + document.getExtension());
-      InputStream inputStream = new FileInputStream(file);
-      IOUtils.copy(inputStream, response.getOutputStream());
-      response.flushBuffer();
+      File file = new File(PATH + "/" + document.getFilename());
+      if (file.exists()) {
+         InputStream inputStream = new FileInputStream(file);
+         IOUtils.copy(inputStream, response.getOutputStream());
+         response.flushBuffer();
+      }
+   }
+
+   void downloadAvatar(HttpServletResponse response, Integer id) throws FileNotFoundException, IOException {
+      Document document = service.getDocumentById(id);
+      File file = new File(PATH + "/" + document.getAvatar());
+      if (file.exists()) {
+         InputStream inputStream = new FileInputStream(file);
+         IOUtils.copy(inputStream, response.getOutputStream());
+         response.flushBuffer();
+      }
    }
 
    private String generateFilename() {

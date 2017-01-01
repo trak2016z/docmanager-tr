@@ -4,5 +4,7 @@ export interface DocumentData {
     note: string,
     keywords: string,
     isPublic: boolean,
-    fileDescription?: FileDescription
+    fileDescription?: FileDescription,
+    avatarFile?: string,
+    id?: number
 }

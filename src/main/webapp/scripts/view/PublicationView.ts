@@ -24,7 +24,7 @@ export class PublicationView {
     private resolveUserPublications() {
 
         let createDeleteButton = (id: number) => {
-            return '<button class="btn btn-danger delete" value="' + id + '">Usu�</button>';
+            return '<button class="btn btn-danger delete" value="' + id + '">Usuń</button>';
         };
 
         let createOpenButton = (id: number) => {

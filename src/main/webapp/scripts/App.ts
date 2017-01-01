@@ -24,6 +24,13 @@ window.onload = () => {
         case 'mydocuments':
             currentView = new PublicationView();
             break;
+        default:
+            if (openedSite.includes("docedit")) {
+                var extractedId = openedSite.substr(7);
+                var id = Number.parseInt(extractedId);
+                currentView = new DocumentView(id);
+            }
+            break;
     }
 }
 

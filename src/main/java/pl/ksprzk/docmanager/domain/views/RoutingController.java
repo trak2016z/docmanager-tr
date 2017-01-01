@@ -40,7 +40,7 @@ public class RoutingController {
       return "/views/register.html";
    }
    
-   @RequestMapping(path = "/upload")
+   @RequestMapping(path = {"/upload", "/docedit{id}"})
    public String getDocumentUploadView() {
       return "/views/docupload.html";
    }

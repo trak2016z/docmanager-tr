@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,10 +43,18 @@ public class DocumentController {
       return ResponseEntity.ok().build();
    }
 
+   //TODO: Poprawić
    @RequestMapping(path = "/fileDownload/{id}")
    public void downloadFile(@PathVariable("id") Integer id, HttpServletRequest request, HttpServletResponse response) throws SecurityUninitializedException, PermissionDeniedException, FileNotFoundException, IOException {
       Security.getInstance().isValid(request);
       service.downloadFile(response, id);
+   }
+
+   //TODO: ZABEZPIECZYĆ
+   @RequestMapping(path = "/avatar/{id}")
+   public void downloadAvatar(@PathVariable("id") Integer id, HttpServletRequest request, HttpServletResponse response) throws SecurityUninitializedException, PermissionDeniedException, FileNotFoundException, IOException {
+
+      service.downloadAvatar(response, id);
    }
 
    @PostMapping(path = "/myDocuments")
@@ -63,6 +72,12 @@ public class DocumentController {
       security.isAuthorizedOwner(request);
       service.deleteDocument(documentId);
       return ResponseEntity.ok().build();
+   }
+
+   //TODO: Zabezpieczyć
+   @GetMapping(path = "/{id}")
+   public ResponseEntity getDocument(@PathVariable(name = "id") int documentId, HttpServletRequest request) {
+      return ResponseEntity.ok(service.getDocumentById(documentId));
    }
 
 }

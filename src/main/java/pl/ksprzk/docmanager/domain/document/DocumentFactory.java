@@ -22,6 +22,7 @@ public class DocumentFactory {
       document.setNote(data.getNote());
       document.setUpdateTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
       document.setId(data.getId());
+      document.setAvatar(data.getAvatarFile());
       return document;
    }
    
@@ -38,6 +39,7 @@ public class DocumentFactory {
       FileDescription fileDescription = new FileDescription();
       fileDescription.setExtension(document.getExtension());
       fileDescription.setFilename(document.getFilename());
+      data.setAvatarFile(document.getAvatar());
       return data;
    }
 }

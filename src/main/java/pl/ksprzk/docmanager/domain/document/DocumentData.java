@@ -17,7 +17,16 @@ public class DocumentData {
    private Calendar lastUpdate;
    private Integer id;
    private FileDescription fileDescription;
+   private String avatarFile;
 
+   public String getAvatarFile() {
+      return avatarFile;
+   }
+
+   public void setAvatarFile(String avatarFile) {
+      this.avatarFile = avatarFile;
+   }
+   
    public FileDescription getFileDescription() {
       return fileDescription;
    }

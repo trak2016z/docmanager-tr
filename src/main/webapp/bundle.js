@@ -73,6 +73,13 @@
 	        case 'mydocuments':
 	            currentView = new PublicationView_1.PublicationView();
 	            break;
+	        default:
+	            if (openedSite.includes("docedit")) {
+	                var extractedId = openedSite.substr(7);
+	                var id = Number.parseInt(extractedId);
+	                currentView = new DocumentView_1.DocumentView(id);
+	            }
+	            break;
 	    }
 	};
 
@@ -386,29 +393,79 @@
 	"use strict";
 	var DocumentService_1 = __webpack_require__(7);
 	var DocumentView = (function () {
-	    function DocumentView() {
+	    function DocumentView(id) {
 	        var _this = this;
+	        this.oldAvatarChanged = false;
+	        this.oldFileChanged = false;
 	        this.fileInput = $('#fileinput')[0];
+	        var imageInput = $('#avatarinput');
+	        this.avatarInput = imageInput[0];
+	        imageInput.change(function () {
+	            if (getFiles(_this.avatarInput)) {
+	                var reader = new FileReader();
+	                reader.onload = function (e) {
+	                    $(_this.imageNode).attr('src', e.target.result);
+	                };
+	                reader.readAsDataURL(getFiles(_this.avatarInput));
+	            }
+	        });
 	        var getFiles = function (element) {
-	            return element.files[0];
+	            if (element.files && element.files[0]) {
+	                return element.files[0];
+	            }
+	            else {
+	                return false;
+	            }
 	        };
 	        this.getFiles = getFiles;
 	        this.nameInput = $('#docupload-form .name-input');
 	        this.noteInput = $('#docupload-form .note-input');
 	        this.keywordsInput = $('#docupload-form .keywords-input');
 	        this.publicInput = $('#docupload-form .public-input');
+	        this.imageNode = $(".documentAvatar");
 	        var button = $('#docupload-form .uploadButton');
 	        button.click(function () {
 	            var file = _this.getFiles(_this.fileInput);
+	            var avatar = _this.getFiles(_this.avatarInput);
 	            var data = {
 	                isPublic: _this.publicInput.is(':checked'),
 	                keywords: _this.keywordsInput.val(),
 	                name: _this.nameInput.val(),
 	                note: _this.noteInput.val()
 	            };
-	            DocumentService_1.DocumentService.uploadFile(file, data, function () { });
+	            if (id) {
+	                data.id = id;
+	            }
+	            var fileRequest = file ? DocumentService_1.DocumentService.uploadFile(file) : null;
+	            var avatarRequest = avatar ? DocumentService_1.DocumentService.uploadFile(avatar) : null;
+	            $.when(fileRequest, avatarRequest).done(function (fileData, avatarData) {
+	                if (fileData) {
+	                    data.fileDescription = fileData[0];
+	                }
+	                if (avatarData) {
+	                    data.avatarFile = avatarData[0].filename;
+	                }
+	                DocumentService_1.DocumentService.updatePublicationdata(data, function () { });
+	            });
 	        });
+	        if (id) {
+	            this.insertPreparedData(id);
+	        }
 	    }
+	    DocumentView.prototype.insertPreparedData = function (id) {
+	        var _this = this;
+	        this.oldDataService = DocumentService_1.DocumentService.getDocumentData(id);
+	        $.when(this.oldDataService).done(function (response) {
+	            _this.oldData = JSON.parse(response);
+	            _this.nameInput.val(_this.oldData.name);
+	            _this.noteInput.val(_this.oldData.note);
+	            _this.keywordsInput.val(_this.oldData.keywords);
+	            _this.publicInput.prop('checked', true);
+	            if (_this.oldData.avatarFile) {
+	                _this.imageNode.attr('src', 'document/avatar/' + id);
+	            }
+	        });
+	    };
 	    return DocumentView;
 	}());
 	exports.DocumentView = DocumentView;
@@ -422,21 +479,19 @@
 	var DocumentService = (function () {
 	    function DocumentService() {
 	    }
-	    DocumentService.uploadFile = function (file, data, handler) {
-	        var url = 'document/fileUpload';
-	        var xhr = new XMLHttpRequest();
-	        xhr.responseType = 'json';
-	        var formData = new FormData();
-	        xhr.open("POST", url, true);
-	        xhr.onreadystatechange = function () {
-	            if (xhr.readyState == 4 && xhr.status == 200) {
-	                var fileData = xhr.response;
-	                data.fileDescription = fileData;
-	                DocumentService.updatePublicationdata(data, handler);
-	            }
-	        };
-	        formData.append("upload_file", file);
-	        xhr.send(formData);
+	    DocumentService.uploadFile = function (file) {
+	        if (file) {
+	            var formData = new FormData();
+	            formData.append("upload_file", file);
+	            return $.ajax({
+	                url: 'document/fileUpload',
+	                method: 'POST',
+	                contentType: false,
+	                processData: false,
+	                data: formData,
+	                cache: false
+	            });
+	        }
 	    };
 	    DocumentService.updatePublicationdata = function (data, handler) {
 	        $.ajax({
@@ -475,26 +530,25 @@
 	    };
 	    ;
 	    DocumentService.editPublication = function (id) {
-	        window.location.href = "document/" + id + '/edit';
+	        window.location.href = "docedit" + id;
 	    };
 	    ;
-	    DocumentService.uploadAvatar = function (file, data) {
-	        var url = 'document/avatar';
-	        var xhr = new XMLHttpRequest();
-	        var formData = new FormData();
-	        xhr.open("POST", url, true);
-	        xhr.onreadystatechange = function () {
-	            if (xhr.readyState == 4 && xhr.status == 200) {
-	                console.log(xhr.responseText);
-	            }
-	        };
-	        formData.append("data", JSON.stringify(data));
-	        formData.append("upload_file", file);
-	        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded; charset=UTF-8');
-	        xhr.send(formData);
-	    };
 	    DocumentService.getFile = function (id) {
 	        window.location.href = 'document/fileDownload/' + id;
+	    };
+	    ;
+	    DocumentService.getAvatar = function (id) {
+	        window.location.href = 'document/avatar/' + id;
+	    };
+	    DocumentService.getDocumentData = function (id) {
+	        return $.ajax({
+	            url: 'document/' + id,
+	            type: 'GET',
+	            context: document.body,
+	            contentType: 'application/json; charset=utf-8',
+	            dataType: 'text',
+	            async: true
+	        });
 	    };
 	    return DocumentService;
 	}());
@@ -522,7 +576,7 @@
 	    PublicationView.prototype.resolveUserPublications = function () {
 	        var _this = this;
 	        var createDeleteButton = function (id) {
-	            return '<button class="btn btn-danger delete" value="' + id + '">Usu�</button>';
+	            return '<button class="btn btn-danger delete" value="' + id + '">Usuń</button>';
 	        };
 	        var createOpenButton = function (id) {
 	            return '<button class="btn btn-default open" value="' + id + '">Otworz</button>';
