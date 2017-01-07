@@ -23,44 +23,58 @@ public class Security {
    private Security() {
       this.authMap = new HashMap<>();
    }
-   public static Security getInstance (){
-      if (instance == null){
+
+   public static Security getInstance() {
+      if (instance == null) {
          instance = new Security();
       }
       return instance;
-   }  
-  
-   
-   public void isAuthorizedOwner (HttpServletRequest request) throws PermissionDeniedException{
-      String user = Arrays.stream(request.getCookies()).filter((Cookie c)->{
+   }
+
+   public void isAuthorizedOwner(HttpServletRequest request) throws PermissionDeniedException {
+      String user = Arrays.stream(request.getCookies()).filter((Cookie c) -> {
          return c.getName().equalsIgnoreCase("user");
       }).findFirst().get().getValue();
       isAuthorizedOwner(request, user);
    }
-   
-   public void isAuthorizedOwner (HttpServletRequest request, String user) throws PermissionDeniedException{
+
+   public void isAuthorizedOwner(HttpServletRequest request, String user) throws PermissionDeniedException {
       HttpSession session = request.getSession();
       Credentials credentials = authMap.get(session.getId());
-      if (!credentials.getUsername().equals(user)){
+      if (!credentials.getUsername().equals(user)) {
          throw new PermissionDeniedException();
       }
    }
-   
+
    public Boolean isValid(HttpServletRequest request) throws SecurityUninitializedException, PermissionDeniedException {
       return isValid(request, null);
    }
-   
-   public Credentials getCredentials (HttpServletRequest request){
+
+   public Credentials getCredentials(HttpServletRequest request) {
       String sessionId = request.getSession().getId();
       return authMap.get(sessionId);
    }
 
-   public Boolean isValid(HttpServletRequest request, Character permission) throws SecurityUninitializedException, PermissionDeniedException {
-      
+   public boolean isLogged(HttpServletRequest request) {
       HttpSession session = request.getSession();
       String sessionId = session.getId();
       Credentials credentials = authMap.get(sessionId);
-      String auth = (String)session.getAttribute("auth_tkt");
+      String auth = (String) session.getAttribute("auth_tkt");
+      boolean result = false;
+      if (credentials != null && StringUtils.isNotEmpty(auth)) {
+         result = auth.equals(credentials.getAuthTk());
+      } else {
+         result = false;
+      }
+      return result;
+   }
+
+   public Boolean isValid(HttpServletRequest request, Character permission) throws SecurityUninitializedException, PermissionDeniedException {
+
+      HttpSession session = request.getSession();
+      String sessionId = session.getId();
+      Credentials credentials = authMap.get(sessionId);
+      String auth = (String) session.getAttribute("auth_tkt");
       boolean result = false;
       if (credentials != null && StringUtils.isNotEmpty(auth)) {
          boolean authResult = auth.equals(credentials.getAuthTk());
@@ -72,23 +86,23 @@ public class Security {
       } else {
          result = false;
       }
-      if (!result){
+      if (!result) {
          throw new PermissionDeniedException();
       }
       return result;
    }
-   
-   public LoginResponse validate (HttpServletRequest request, Credentials credentials) throws SecurityUninitializedException, NoSuchUserException, PermissionDeniedException{
-       HttpSession session = request.getSession();
-       String sessionId = session.getId();
-       credentials.setSessionId(sessionId);
-       String authTkt = Generators.generateAuthTk();
-       credentials.setAuthTk(authTkt);
-       session.setAttribute("auth_tkt", authTkt);
-       session.setAttribute("user", credentials.getUsername());
-       this.authMap.put(sessionId, credentials);
-       isValid(request);
-       return new LoginResponse(credentials);
+
+   public LoginResponse validate(HttpServletRequest request, Credentials credentials) throws SecurityUninitializedException, NoSuchUserException, PermissionDeniedException {
+      HttpSession session = request.getSession();
+      String sessionId = session.getId();
+      credentials.setSessionId(sessionId);
+      String authTkt = Generators.generateAuthTk();
+      credentials.setAuthTk(authTkt);
+      session.setAttribute("auth_tkt", authTkt);
+      session.setAttribute("user", credentials.getUsername());
+      this.authMap.put(sessionId, credentials);
+      isValid(request);
+      return new LoginResponse(credentials);
    }
 
 }
