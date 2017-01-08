@@ -4,12 +4,14 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 import pl.ksprzk.docmanager.persistence.user.User;
 
 /**
  *
  * @author Przemysław Kasprzyk
  */
+@Transactional
 interface DocumentRepository extends PagingAndSortingRepository<Document, Integer> {
 
    Document findDocumentByName(String name);

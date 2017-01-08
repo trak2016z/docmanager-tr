@@ -1,9 +1,8 @@
 package pl.ksprzk.docmanager.integration.config;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 import java.util.Properties;
 import javax.sql.DataSource;
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,15 +31,12 @@ public class DatabaseConfig {
 
    @Bean
    DataSource dataSource() {
-      HikariConfig config = new HikariConfig();
-      config.setDriverClassName("com.mysql.jdbc.Driver");
-      config.setJdbcUrl("jdbc:mysql://sql7.freesqldatabase.com:3306/sql7142486");
-      config.setMaximumPoolSize(1);
-      config.setUsername("sql7142486");
-      config.setPassword("NmTDzEDFL1");
-      config.setAutoCommit(true);
-      HikariDataSource dataSource = new HikariDataSource(config);
-      return dataSource;
+      BasicDataSource datasource = new BasicDataSource();
+      datasource.setDriverClassName("com.mysql.jdbc.Driver");
+      datasource.setUrl("jdbc:mysql://sql7.freesqldatabase.com:3306/sql7142486");
+      datasource.setUsername("sql7142486");
+      datasource.setPassword("NmTDzEDFL1");
+      return datasource;
    }
 
    @Bean

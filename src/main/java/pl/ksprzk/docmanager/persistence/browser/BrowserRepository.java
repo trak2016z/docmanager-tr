@@ -13,6 +13,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import pl.ksprzk.docmanager.integration.persistence.BaseRepository;
 import pl.ksprzk.docmanager.integration.persistence.Page;
 
@@ -42,6 +43,7 @@ class BrowserRepository extends BaseRepository {
       return result;
    }
 
+   @Transactional
    SearchBrowserData getRecords(boolean publicNeeded, String[] criteriaStrings, int pageNumber, int pageSize) {
       Session session = getSession();
       Criteria criteria = session.createCriteria(SearchBrowser.class);
@@ -54,7 +56,7 @@ class BrowserRepository extends BaseRepository {
       criteria.setFirstResult((pageNumber - 1) * pageSize);
       criteria.setMaxResults(pageNumber * pageSize);
       List<SearchBrowser> searchList = criteria.list();
-      Page page= new Page();
+      Page page = new Page();
       page.setNumber(pageNumber);
       page.setSize(pageSize);
       page.setTotal(records);
