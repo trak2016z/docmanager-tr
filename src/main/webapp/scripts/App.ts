@@ -18,6 +18,9 @@ window.onload = () => {
     else {
         
         switch (openedSite) {
+            case 'index':
+                currentView = new SearchView();
+                break;
             case 'register':
                 currentView = new RegisterView();
                 break;

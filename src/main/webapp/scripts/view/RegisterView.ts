@@ -1,7 +1,9 @@
 import { RegisteredUser } from '../model/RegisteredUser';
 import { RegisterService } from '../services/RegisterService';
 import { UserValidator } from '../utils/UserValidator';
-export class RegisterView {
+import { BaseView } from './BaseView';
+
+export class RegisterView extends BaseView {
     private form: JQuery;
     private registerButton: JQuery;
     private registerFailedModal: JQuery;
@@ -17,6 +19,7 @@ export class RegisterView {
     private phoneInput: JQuery;
 
     constructor() {
+        super();
         this.userValidator = new UserValidator();
 
         this.init();

@@ -100,9 +100,15 @@ public class Security {
       credentials.setAuthTk(authTkt);
       session.setAttribute("auth_tkt", authTkt);
       session.setAttribute("user", credentials.getUsername());
+      session.setAttribute("permission", credentials.getPermission());
       this.authMap.put(sessionId, credentials);
       isValid(request);
       return new LoginResponse(credentials);
+   }
+   
+   public void logoff(HttpServletRequest request){
+      HttpSession session = request.getSession();
+      this.authMap.remove(session.getId());
    }
 
 }

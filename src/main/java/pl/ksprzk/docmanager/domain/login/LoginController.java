@@ -3,6 +3,7 @@ package pl.ksprzk.docmanager.domain.login;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,6 +45,17 @@ class LoginController {
       return ResponseEntity.ok().build();
    }
    
+   @GetMapping(path = "/isLogged")
+   @ResponseBody
+   public ResponseEntity isLogged(HttpServletRequest request){
+      return ResponseEntity.ok(Security.getInstance().isLogged(request));
+   }
    
+   @GetMapping(path = "/logoff")
+   @ResponseBody
+   public ResponseEntity logoff(HttpServletRequest request){
+      Security.getInstance().logoff(request);
+      return ResponseEntity.ok().build();
+   }
 
 }

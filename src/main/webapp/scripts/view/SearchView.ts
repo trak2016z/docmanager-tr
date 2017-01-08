@@ -6,8 +6,9 @@ import { SimpleSearchRequest } from '../model/SimpleSearchRequest';
 import { DocumentService } from '../services/DocumentService';
 import { RegexUtil } from '../utils/RegexUtil';
 import * as moment from 'moment';
+import { BaseView } from './BaseView';
 
-export class SearchView {
+export class SearchView extends BaseView {
 
     private searchInput: JQuery;
     private publicationsTable: JQuery;
@@ -23,6 +24,7 @@ export class SearchView {
     private currentPage: number = 1;
 
     constructor() {
+        super();
         this.searchInput = $('.search-input');
         this.publicationsTable = $('.publications-table tbody');
         this.pageSizeInput = $('.page-size');

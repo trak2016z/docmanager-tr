@@ -5,14 +5,15 @@ import { CookieUtil } from '../utils/CookieUtil';
 import * as $ from 'jquery';
 import * as moment from 'moment';
 import * as Collections from 'typescript-collections';
+import { BaseView } from './BaseView';
 
-
-export class PublicationView {
+export class PublicationView extends BaseView {
 
     private publicationTable: JQuery;
     private availablePublications: Collections.Dictionary<string, number>;
 
     constructor() {
+        super();
         this.init();
     }
 

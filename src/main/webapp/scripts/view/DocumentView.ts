@@ -1,8 +1,9 @@
 import { DocumentData } from '../model/DocumentData'
 import { DocumentService } from '../services/DocumentService';
 import { FileDescription } from '../model/FileDescription';
+import { BaseView } from './BaseView';
 
-export class DocumentView {
+export class DocumentView extends BaseView {
 
     private getFiles: Function;
     private fileInput: HTMLElement;
@@ -18,6 +19,7 @@ export class DocumentView {
     private imageNode: JQuery;
 
     constructor(id?: number) {
+        super();
         this.fileInput = $('#fileinput')[0];
         let imageInput = $('#avatarinput');
         this.avatarInput = imageInput[0];

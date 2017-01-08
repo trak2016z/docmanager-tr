@@ -1,6 +1,8 @@
 import { LoginData } from '../model/LoginData';
 import { LoginService } from '../services/LoginService';
-export class LoginView {
+import { BaseView } from './BaseView';
+
+export class LoginView extends BaseView {
 
     private loginForm: JQuery;
     private resetForm: JQuery;
@@ -8,6 +10,7 @@ export class LoginView {
     private encryptor;
 
     constructor() {
+        super();
         this.loginForm = $('#form-login');
         this.resetForm = $('#form-reset');
         this.loginFailedModal = $('#loginFailedModal');
@@ -29,6 +32,7 @@ export class LoginView {
                 response = JSON.parse(response);
                 document.cookie = "auth_tkt="+response.auth_tkt+";";
                 document.cookie = "user="+response.name+";";
+                document.cookie = "permission="+response.permission+";";
                 window.location.href = window.location.href + '/..';
             }, () => {
                 this.loginFailedModal.modal('toggle');

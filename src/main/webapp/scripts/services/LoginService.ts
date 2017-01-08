@@ -27,4 +27,25 @@ export class LoginService {
             data: 'email=' + email
         }).done(successHandler).fail(failHandler);
     }
+
+    public static logoff(handler: any) {
+        let request = $.ajax({
+            url: 'loginservice/logoff',
+            context: document.body,
+            type: 'GET',
+            dataType: 'text',
+            async: true
+        }).done(handler);
+    }
+
+    public static isLogged(handler: any) {
+        let request = $.ajax({
+            url: 'loginservice/isLogged',
+            context: document.body,
+            type: 'GET',
+            dataType: 'text',
+            async: true
+        }).done(handler);
+    }
+
 }

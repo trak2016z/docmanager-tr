@@ -35,11 +35,10 @@ public class DatabaseConfig {
       HikariConfig config = new HikariConfig();
       config.setDriverClassName("com.mysql.jdbc.Driver");
       config.setJdbcUrl("jdbc:mysql://sql7.freesqldatabase.com:3306/sql7142486");
-      config.setMaximumPoolSize(20);
+      config.setMaximumPoolSize(1);
       config.setUsername("sql7142486");
       config.setPassword("NmTDzEDFL1");
       config.setAutoCommit(true);
-
       HikariDataSource dataSource = new HikariDataSource(config);
       return dataSource;
    }
