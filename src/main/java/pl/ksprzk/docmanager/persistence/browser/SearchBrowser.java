@@ -37,7 +37,7 @@ public class SearchBrowser implements Serializable {
    @Column(name = "document_id")
    private int id;
    @Column(name = "average_rate")
-   private double averageRate;
+   private Double averageRate;
 
    public String getAvatar() {
       return avatar;
@@ -111,11 +111,11 @@ public class SearchBrowser implements Serializable {
       this.id = id;
    }
 
-   public double getAverageRate() {
+   public Double getAverageRate() {
       return averageRate;
    }
 
-   public void setAverageRate(double averageRate) {
+   public void setAverageRate(Double averageRate) {
       this.averageRate = averageRate;
    }
    

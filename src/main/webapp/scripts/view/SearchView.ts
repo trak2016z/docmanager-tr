@@ -5,6 +5,7 @@ import { Page } from '../model/Page';
 import { SimpleSearchRequest } from '../model/SimpleSearchRequest';
 import { DocumentService } from '../services/DocumentService';
 import { RegexUtil } from '../utils/RegexUtil';
+import * as moment from 'moment';
 
 export class SearchView {
 
@@ -28,7 +29,7 @@ export class SearchView {
         let template = '';
         data.forEach(element => {
             template += '<tr val="' + element.id + '"><td>' + element.name + '</td><td>' + element.firstName + ' ' + element.lastName +
-                '</td><td>' + element.modified + '</td><td>' + element.rate + '</td></tr>';
+                '</td><td>' + moment(element.modified).format("DD-MM-YYYY HH:mm") + '</td><td>' + element.rate + '</td></tr>';
         });
         this.publicationsTable.html(template);
 

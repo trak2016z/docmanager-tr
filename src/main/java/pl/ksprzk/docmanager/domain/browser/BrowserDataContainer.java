@@ -9,7 +9,7 @@ import java.util.Calendar;
 public class BrowserDataContainer {
 
    private String name;
-   private double rate;
+   private Double rate;
    private Calendar modified;
    private String avatar;
    private String firstName;
@@ -48,11 +48,11 @@ public class BrowserDataContainer {
       this.name = name;
    }
 
-   public double getRate() {
+   public Double getRate() {
       return rate;
    }
 
-   public void setRate(double rate) {
+   public void setRate(Double rate) {
       this.rate = rate;
    }
 

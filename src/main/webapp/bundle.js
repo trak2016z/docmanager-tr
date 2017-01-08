@@ -28915,6 +28915,7 @@
 	var BrowserService_1 = __webpack_require__(124);
 	var DocumentService_1 = __webpack_require__(7);
 	var RegexUtil_1 = __webpack_require__(125);
+	var moment = __webpack_require__(11);
 	var SearchView = (function () {
 	    function SearchView() {
 	        this.TIMEOUT_VALUE = 1000;
@@ -28929,7 +28930,7 @@
 	        var template = '';
 	        data.forEach(function (element) {
 	            template += '<tr val="' + element.id + '"><td>' + element.name + '</td><td>' + element.firstName + ' ' + element.lastName +
-	                '</td><td>' + element.modified + '</td><td>' + element.rate + '</td></tr>';
+	                '</td><td>' + moment(element.modified).format("DD-MM-YYYY HH:mm") + '</td><td>' + element.rate + '</td></tr>';
 	        });
 	        this.publicationsTable.html(template);
 	        this.publicationsTable.find('tr').click(function () {

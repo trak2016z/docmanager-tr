@@ -51,8 +51,8 @@ class BrowserRepository extends BaseRepository {
       long records = (long) criteria.uniqueResult();
       criteria.setProjection(null);
       criteria.addOrder(Order.desc("uploaded"));
-      criteria.setFirstResult((pageNumber - 1) * pageSize);
-      criteria.setMaxResults(pageNumber * pageSize + 1);
+      criteria.setFirstResult((pageNumber - 1) * pageSize + 1);
+      criteria.setMaxResults(pageNumber * pageSize);
       List<SearchBrowser> searchList = criteria.list();
       Page page= new Page();
       page.setNumber(pageNumber);

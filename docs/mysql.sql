@@ -61,7 +61,7 @@ CREATE TABLE `document` (
   UNIQUE KEY `doument_id_UNIQUE` (`document_id`),
   KEY `user_fk_idx` (`fk_user`),
   CONSTRAINT `user_document_fk` FOREIGN KEY (`fk_user`) REFERENCES `user` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -84,6 +84,19 @@ CREATE TABLE `rate` (
   CONSTRAINT `fkuser` FOREIGN KEY (`user_fk`) REFERENCES `user` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Temporary view structure for view `rate_view`
+--
+
+DROP TABLE IF EXISTS `rate_view`;
+/*!50001 DROP VIEW IF EXISTS `rate_view`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `rate_view` AS SELECT 
+ 1 AS `average_rate`,
+ 1 AS `document_fk`*/;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Temporary view structure for view `search_browser`
@@ -131,6 +144,24 @@ CREATE TABLE `user` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Final view structure for view `rate_view`
+--
+
+/*!50001 DROP VIEW IF EXISTS `rate_view`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`sql7142486`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `rate_view` AS (select avg(`r`.`rate_value`) AS `average_rate`,`r`.`document_fk` AS `document_fk` from `rate` `r`) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
 -- Final view structure for view `search_browser`
 --
 
@@ -143,7 +174,7 @@ CREATE TABLE `user` (
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`sql7142486`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `search_browser` AS (select `d`.`avatar` AS `avatar`,`d`.`keywords` AS `keywords`,`d`.`approved` AS `approved`,`d`.`name` AS `name`,`d`.`uploaded` AS `uploaded`,`u`.`fname` AS `fname`,`u`.`lname` AS `lname`,`d`.`public` AS `public`,`d`.`document_id` AS `document_id`,avg(`r`.`rate_value`) AS `average_rate` from ((`document` `d` left join `user` `u` on((`u`.`user_id` = `d`.`fk_user`))) left join `rate` `r` on((`r`.`document_fk` = `d`.`document_id`)))) */;
+/*!50001 VIEW `search_browser` AS (select `d`.`avatar` AS `avatar`,`d`.`keywords` AS `keywords`,`d`.`approved` AS `approved`,`d`.`name` AS `name`,`d`.`uploaded` AS `uploaded`,`u`.`fname` AS `fname`,`u`.`lname` AS `lname`,`d`.`public` AS `public`,`d`.`document_id` AS `document_id`,`r`.`average_rate` AS `average_rate` from ((`document` `d` left join `user` `u` on((`u`.`user_id` = `d`.`fk_user`))) left join `rate_view` `r` on((`r`.`document_fk` = `d`.`document_id`)))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -157,4 +188,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-07 20:52:33
+-- Dump completed on 2017-01-08  9:31:36
