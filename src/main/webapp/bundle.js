@@ -28919,18 +28919,53 @@
 	var SearchView = (function () {
 	    function SearchView() {
 	        this.TIMEOUT_VALUE = 1000;
+	        this.currentPage = 1;
 	        this.searchInput = $('.search-input');
 	        this.publicationsTable = $('.publications-table tbody');
-	        this.pageNumberInput = $('.page-number');
 	        this.pageSizeInput = $('.page-size');
+	        this.pageCurrentOutput = $('.criteria .current-page');
+	        this.initNavigationButtons();
 	        this.initiateSearchInputActions(this.searchInput);
 	        this.performSearch();
 	    }
+	    SearchView.prototype.initNavigationButtons = function () {
+	        var _this = this;
+	        this.pageFirstInput = $('.criteria .first-page');
+	        this.pagePreviousInput = $('.criteria .previous-page');
+	        this.pageNextInput = $('.criteria .next-page');
+	        this.pageLastInput = $('.criteria .last-page');
+	        this.pageFirstInput.click(function () {
+	            _this.currentPage = 1;
+	            _this.performSearch();
+	            _this.pageCurrentOutput.text(_this.currentPage);
+	        });
+	        this.pagePreviousInput.click(function () {
+	            if (_this.currentPage > 1) {
+	                _this.currentPage--;
+	                _this.performSearch();
+	                _this.pageCurrentOutput.text(_this.currentPage);
+	            }
+	        });
+	        this.pageLastInput.click(function () {
+	            if (_this.totalPages) {
+	                _this.currentPage = _this.totalPages;
+	                _this.performSearch();
+	                _this.pageCurrentOutput.text(_this.currentPage);
+	            }
+	        });
+	        this.pageNextInput.click(function () {
+	            if (_this.currentPage < _this.totalPages) {
+	                _this.currentPage++;
+	                _this.performSearch();
+	                _this.pageCurrentOutput.text(_this.currentPage);
+	            }
+	        });
+	    };
 	    SearchView.prototype.buildTable = function (data) {
 	        var template = '';
 	        data.forEach(function (element) {
 	            template += '<tr val="' + element.id + '"><td>' + element.name + '</td><td>' + element.firstName + ' ' + element.lastName +
-	                '</td><td>' + moment(element.modified).format("DD-MM-YYYY HH:mm") + '</td><td>' + element.rate + '</td></tr>';
+	                '</td><td>' + moment(element.modified).format("DD-MM-YYYY HH:mm") + '</td><td>' + (element.rate ? element.rate : "(brak ocen)") + '</td></tr>';
 	        });
 	        this.publicationsTable.html(template);
 	        this.publicationsTable.find('tr').click(function () {
@@ -28940,7 +28975,7 @@
 	    };
 	    SearchView.prototype.providePage = function () {
 	        var pageSize = this.pageSizeInput.val();
-	        var pageNumber = this.pageNumberInput.val();
+	        var pageNumber = this.currentPage;
 	        var page = {
 	            number: pageNumber,
 	            size: pageSize
@@ -28955,6 +28990,8 @@
 	        var _this = this;
 	        searchInput.keyup(function () {
 	            clearTimeout(_this.timeout);
+	            _this.currentPage = 1;
+	            _this.pageCurrentOutput.val(1);
 	            _this.timeout = setTimeout(function () {
 	                _this.performSearch();
 	            }, _this.TIMEOUT_VALUE);
@@ -28969,7 +29006,8 @@
 	        BrowserService_1.BrowserService.simpleSearchRecords(requestData).done(function (response) {
 	            var convertedDataResponse = JSON.parse(response);
 	            _this.buildTable(convertedDataResponse.dataContainer);
-	            //TODO: PAGING
+	            var page = convertedDataResponse.page;
+	            _this.totalPages = Math.ceil(page.total / parseInt(_this.pageSizeInput.val()));
 	        });
 	    };
 	    return SearchView;
