@@ -1,6 +1,9 @@
 ## Autor
 Przemysław Kasprzyk
 
+## Dokumentacja
+Zawarta jest w folderze docs. SystemZarządzaniaDokumentamiV2.docx zawiera opis struktury projektu.
+
 ## Cel projektu
 Dostarczenie aplikacji do zarządzania dokumentami. Jest to projekt na zajęcia z przedmiotu Aplikacje Internetowe
 
